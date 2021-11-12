@@ -1,0 +1,54 @@
+
+
+#         Powered by TabooLib 6.0         #
+
+database:
+
+  # 数据存储方式
+  # YAML(默认), MySQL
+  storage: YAML
+
+  # 数据源配置
+  source:
+
+    # MySQL相关设置
+    mysql:
+      host: localhost
+      port: 3306
+      user: root
+      password: 12345
+      database: minecraft
+      table-prefix: aiurtitle_
+
+title-setting:
+
+  # 默认称号设置
+  default:
+
+    # 前缀
+    prefix: '&f['
+
+    # 后缀
+    suffix: '&f]'
+
+    # 显示称号
+    display: '&7平民'
+    icon:
+      template: 'default'
+
+template-setting:
+
+  # 默认使用的模板
+  default-use: 'default'
+
+  # 当上述默认模板无法正常被加载时
+  # 使用一下的模板，默认id为 default
+  default-template:
+    shop:
+      display:
+        name: '${display}'
+        lore:
+          - ''
+          - '&f&l>> &a&l简介'
+          - ' &c&l◆ &7${description}'
+          - ''

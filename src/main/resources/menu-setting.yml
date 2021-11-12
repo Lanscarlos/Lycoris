@@ -1,0 +1,45 @@
+
+
+menu-shop:
+  title: 'aa&3&l检测菜单'
+
+  layout:
+    - '`previous-page`#######`next-page`'
+    - ' $$$$$$$'
+    - ' $$$$$$$'
+    - ' $$$$$$$'
+    - '`previous-page`#######`next-page`'
+
+  open-sounds:
+    - 'xxxx-1-1'
+  close-sounds:
+    - 'xxxx-1-1'
+
+  icons:
+    '#':
+      display:
+        mat: 'LIGHT_BLUE_STAINED_GLASS_PANE'
+        name: 'abc'
+        lore:
+          - '你好'
+        shiny: true
+
+  buttons:
+    previous-page:
+      display:
+        mat: 'Paper'
+        name: '&a上一页'
+      no-page:
+        display:
+          mat: 'Paper'
+          name: '&7上一页'
+
+
+    next-page:
+      display:
+        mat: 'Paper'
+        name: '&a下一页'
+      no-page:
+        display:
+          mat: 'Paper'
+          name: '&7下一页'

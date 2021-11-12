@@ -1,0 +1,14 @@
+example-Title:
+  display: "&b小萌新~"
+  icon:
+    templete: 'default'
+  properties:
+    description:
+      - '你好啊'
+      - '我是简介'
+
+
+example-Title-2:
+  display: "&a小小小萌新~"
+example-Title-Error:
+  display: "&a小小小萌新~"

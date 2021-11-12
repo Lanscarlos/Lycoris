@@ -1,0 +1,9 @@
+example:
+  shop:
+    display:
+      name: '${display}'
+      lore:
+        - ''
+        - '&f&l>> &a&l简介'
+        - ' &c&l◆ &7${description}'
+        - ''
