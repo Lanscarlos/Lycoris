@@ -33,22 +33,27 @@ title-setting:
 
     # 显示称号
     display: '&7平民'
+    description:
+      - '我是简介'
     icon:
       template: 'default'
 
 template-setting:
 
-  # 默认使用的模板
-  default-use: 'default'
-
   # 当上述默认模板无法正常被加载时
   # 使用一下的模板，默认id为 default
-  default-template:
-    shop:
-      display:
-        name: '${display}'
-        lore:
-          - ''
-          - '&f&l>> &a&l简介'
-          - ' &c&l◆ &7${description}'
-          - ''
+  default:
+    display:
+      mat: 'Name_Tag'
+      name: '${display-title}'
+      lore:
+        - '&f&l>>&a&l Description'
+        - ' &c&lo &7{{description}}'
+        - ''
+        - '{{button}}'
+      shiny: 'false'
+    script:
+      button: 'if check $menu-type is *shop then $button-repository else $button-shop'
+    properties:
+      button-repository: 'Use Now'
+      button-shop: 'Acquire Now'

@@ -1,9 +1,15 @@
 example:
-  shop:
-    display:
-      name: '${display}'
-      lore:
-        - ''
-        - '&f&l>> &a&l简介'
-        - ' &c&l◆ &7${description}'
-        - ''
+  display:
+    mat: 'Name_Tag'
+    name: '${display-title}'
+    lore:
+      - '&f&l>>&a&l Description'
+      - ' &c&lo &7{{description}}'
+      - ''
+      - '{{button}}'
+    shiny: 'false'
+    script:
+      button: 'if check $menu-type is *shop then $button-repository else $button-shop'
+    properties:
+      button-repository: 'Use Now'
+      button-shop: 'Acquire Now'
