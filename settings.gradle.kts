@@ -1,1 +1,1 @@
-rootProject.name="Lycoris"
+rootProject.name="Lycoriss"
