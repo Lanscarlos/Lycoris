@@ -24,7 +24,5 @@ gradlew.bat clean build
 
 # <strong id="module">模块</strong>
 
-## <strong id="title">称号</strong>
-
-## <strong id="title">效果</strong>
+## <strong id="title">待编辑...</strong>
 
