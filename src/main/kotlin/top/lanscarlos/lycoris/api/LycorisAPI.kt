@@ -2,14 +2,21 @@ package top.lanscarlos.lycoris.api
 
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
+import top.lanscarlos.lycoris.core.User
 import top.lanscarlos.lycoris.core.title.Title
 import top.lanscarlos.lycoris.module.data.TitleData
 import top.lanscarlos.lycoris.module.data.UserData
+import top.lanscarlos.lycoris.module.data.getUser
 
 object LycorisAPI {
 
     fun isTitle(id: String) : Boolean {
         return TitleData.isTitle(id)
+    }
+
+    fun isAvailableTitle(id: String) : Boolean {
+        if (!isTitle(id)) return false
+        return getTitle(id).isAvailable()
     }
 
     fun getTitleIds() : List<String> {
@@ -32,86 +39,11 @@ object LycorisAPI {
         return TitleData.getTitles()
     }
 
-
-
     /**
-     * 获取玩家当前使用的称号ID
+     * 获取玩家对应的用户实例
      * */
-    fun getTitleIdPlayerUse(player: OfflinePlayer) : String {
-        return UserData.getPlayerTitle(player)
+    fun getUser(player: OfflinePlayer): User {
+        return player.getUser()
     }
 
-    /**
-     * 设置玩家当前使用的称号ID
-     * */
-    fun setTitlePlayerUse(player: OfflinePlayer, id: String) {
-        UserData.setPlayerTitle(player, id)
-    }
-
-    /**
-     * 给予玩家称号
-     * */
-    fun addPlayerTitle(player: OfflinePlayer, id: String) {
-        UserData.addPlayerTitle(player, id)
-    }
-
-    /**
-     * 给予玩家称号
-     * */
-    fun removePlayerTitle(player: OfflinePlayer, id: String) {
-        UserData.removePlayerTitle(player, id)
-    }
-
-
-
-    fun getPlayerTitlePiece(player: OfflinePlayer) : Int {
-        return UserData.getPlayerTitlePiece(player)
-    }
-
-    fun givePlayerTitlePiece(player: OfflinePlayer, amount: Int) {
-        UserData.givePlayerTitlePiece(player, amount)
-    }
-
-    fun takePlayerTitlePiece(player: OfflinePlayer, amount: Int) {
-        UserData.takePlayerTitlePiece(player, amount)
-    }
-
-    fun setPlayerTitlePiece(player: OfflinePlayer, amount: Int) {
-        UserData.setPlayerTitlePiece(player, amount)
-    }
-
-
-
-
-    fun playerHasTitle(player: OfflinePlayer, id: String) : Boolean {
-        return if (id == getDefaultTitle().getId()) true else getPlayerTitleList(player).contains(id)
-    }
-
-    /**
-     * 获取玩家所拥有的称号ID列表
-     * */
-    fun getPlayerTitleList(name: String) : List<String> {
-        getOfflinePlayer(name)?.let {
-            return getPlayerTitleList(it)
-        }
-        return mutableListOf()
-    }
-    fun getPlayerTitleList(player: OfflinePlayer) : List<String> {
-        return UserData.getPlayerTitleList(player)
-    }
-
-    fun getTitlePlayerUse(player: OfflinePlayer) : Title {
-        return getTitle(getTitleIdPlayerUse(player))
-    }
-
-    fun getOfflinePlayer(name: String) : OfflinePlayer? {
-        return Bukkit.getOfflinePlayers().let {
-            it.forEach { offline ->
-                if (offline.name == name) {
-                    return@let offline
-                }
-            }
-            return null
-        }
-    }
 }

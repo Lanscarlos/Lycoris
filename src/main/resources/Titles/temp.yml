@@ -2,6 +2,7 @@ example-title:
   display: 'This is a Title'
 
   icon:
+    hidden: false
     template: 'example-template'
     custom:
       display:
@@ -37,7 +38,6 @@ example-title:
 
   duration: '16d8h4m'
   deadline: '2021-11-12 16:00:00'
-  hidden: false
   buff:
     - type: 'Speed'
       amplifier: 1
@@ -54,9 +54,17 @@ example-title:
       - 'example.permission.1'
       - 'example.permission.2'
   acquire:
-    required:
-      vault: 10
-      points: 10
-      exp: 13
-      exp-level: 10
-      items: {}
+    - type: nothing
+    - type: vault
+      value: 100
+    - type: points
+      value: 100
+    - type: exp
+      value: 10
+    - type: exp-level
+      value: 10
+    - type: permission
+      value: 'example.permission.2'
+    - type: custom
+      condition: 'check papi *%playerpoints_points% >= *100'
+      execute: 'command *"points take *100"'

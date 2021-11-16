@@ -226,7 +226,6 @@ class Template(config: ConfigurationSection) {
         private val templates = mutableMapOf<String, Template>()
 
         fun loadTemplates() {
-            Lycoris.templateConfig.reload()
             defaultTemplate = Template(Lycoris.config.getConfigurationSection("template-setting.default"))
             Lycoris.templateConfig.getKeys(false).forEach {
                 templates[it] = Template(Lycoris.templateConfig.getConfigurationSection(it))

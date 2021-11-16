@@ -89,31 +89,43 @@ class DatabaseMySQL : Database() {
         }
     }
 
-    override fun getPlayerTitleList(player: OfflinePlayer) : MutableList<String> {
-        val json = tableUser.select(dataSource) {
-            rows("repository")
-            where("uuid" eq player.uniqueId.toString())
-        }.firstOrNull { getString("repository") } ?: "[\"default\"]"
-
-        return mutableListOf<String>().apply {
-            jsonParser.parse(json).asJsonArray.forEach{
-                add(it.asString)
-            }
-        }
+    override fun getPlayerRepository(player: OfflinePlayer): Map<String, Long> {
+        TODO("Not yet implemented")
     }
 
-    override fun updatePlayerTitleList(player: OfflinePlayer, list: List<String>) {
-        tableUser.update(dataSource) {
-            where("uuid" eq  player.uniqueId.toString())
-            set("repository", gson.toJson(list))
-        }
+    override fun updatePlayerRepository(player: OfflinePlayer, repository: Map<String, Long>) {
+        TODO("Not yet implemented")
     }
 
-    override fun insertPlayerData(player: OfflinePlayer, use: String, list: List<String>) {
-        tableUser.insert(dataSource, "uuid", "name", "use", "repository") {
-            value(player.uniqueId.toString(), player.name!!, use, gson.toJson(list))
-        }
+    override fun insertPlayerData(player: OfflinePlayer, use: String, repository: Map<String, Long>) {
+        TODO("Not yet implemented")
     }
+
+//    override fun getPlayerTitleList(player: OfflinePlayer) : MutableList<String> {
+//        val json = tableUser.select(dataSource) {
+//            rows("repository")
+//            where("uuid" eq player.uniqueId.toString())
+//        }.firstOrNull { getString("repository") } ?: "[\"default\"]"
+//
+//        return mutableListOf<String>().apply {
+//            jsonParser.parse(json).asJsonArray.forEach{
+//                add(it.asString)
+//            }
+//        }
+//    }
+//
+//    override fun updatePlayerTitleList(player: OfflinePlayer, list: List<String>) {
+//        tableUser.update(dataSource) {
+//            where("uuid" eq  player.uniqueId.toString())
+//            set("repository", gson.toJson(list))
+//        }
+//    }
+//
+//    override fun insertPlayerData(player: OfflinePlayer, use: String, list: List<String>) {
+//        tableUser.insert(dataSource, "uuid", "name", "use", "repository") {
+//            value(player.uniqueId.toString(), player.name!!, use, gson.toJson(list))
+//        }
+//    }
 
     companion object {
         val gson = Gson()

@@ -24,10 +24,9 @@ Command-User-Title-Help:
 Command-User-Title-Clear-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> title give <称号ID>'
 Command-User-Title-Clear-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功为玩家 {0} 恢复为默认称号'
 
-Command-User-Title-Give-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> title give <称号ID>'
-Command-User-Title-Give-Cannot-Give-Default: '&8[&3Aiur&bTitle&8] &c错误 &8| &7不能给予默认称号！'
-Command-User-Title-Give-Already-Owned: '&8[&3Aiur&bTitle&8] &a良好 &8| &7玩家 {0} 已拥有称号 {1}'
-Command-User-Title-Give-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功给予玩家 {0} 称号 {1}'
+Command-User-Title-Add-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> title give <称号ID>'
+Command-User-Title-Add-Cannot-Give-Default: '&8[&3Aiur&bTitle&8] &c错误 &8| &7不能给予默认称号！'
+Command-User-Title-Add-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功给予玩家 {0} 称号 {1}'
 
 Command-User-Title-Set-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> title remove <称号ID>'
 Command-User-Title-Set-Not-Owned: '&8[&3Aiur&bTitle&8] &a良好 &8| &7玩家 {0} 未拥有称号 {1}'
@@ -58,3 +57,7 @@ Command-User-Piece-Set-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功设置
 
 Command-User-Piece-Take-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> piece take <数量>'
 Command-User-Piece-Take-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功扣除玩家 {0} 称号碎片 {1} 个'
+
+
+# Player
+User-Title-Not-Exist: '&8[&3Aiur&bTitle&8] &c错误 &8| &7检测到你正在使用的称号已失效！已为你更换为默认称号'

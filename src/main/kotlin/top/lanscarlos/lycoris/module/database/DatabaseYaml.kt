@@ -1,8 +1,10 @@
 package top.lanscarlos.lycoris.module.database
 
 import org.bukkit.OfflinePlayer
+import taboolib.common.platform.function.info
 import taboolib.common.platform.function.releaseResourceFile
 import taboolib.library.configuration.YamlConfiguration
+import taboolib.module.configuration.util.getMap
 import top.lanscarlos.lycoris.Lycoris
 import java.io.File
 
@@ -42,22 +44,26 @@ object DatabaseYaml : Database() {
         saveData()
     }
 
-    override fun getPlayerTitleList(player: OfflinePlayer): MutableList<String> {
-        return data.getStringList("${player.uniqueId.toString()}.list")
+    override fun getPlayerRepository(player: OfflinePlayer): Map<String, Long> {
+        return data.getMap<String, Long>("${player.uniqueId.toString()}.repository")
     }
 
-    override fun updatePlayerTitleList(player: OfflinePlayer, list: List<String>) {
-        data.set("${player.uniqueId.toString()}.list", list)
+    override fun updatePlayerRepository(player: OfflinePlayer, repository: Map<String, Long>) {
+        info("正在保存仓库...")
+        data.set("${player.uniqueId.toString()}.repository", repository)
         saveData()
     }
 
-    override fun insertPlayerData(player: OfflinePlayer, use: String, list: List<String>) {
+
+    override fun insertPlayerData(player: OfflinePlayer, use: String, repository: Map<String, Long>) {
         data.set("${player.uniqueId.toString()}.use", use)
-        data.set("${player.uniqueId.toString()}.list", list)
+        data.set("${player.uniqueId.toString()}.piece", 0)
+        data.set("${player.uniqueId.toString()}.repository", repository)
         saveData()
     }
 
-    fun saveData() {
+    private fun saveData() {
+        info("检测到保存文件...")
         data.save(file)
     }
 

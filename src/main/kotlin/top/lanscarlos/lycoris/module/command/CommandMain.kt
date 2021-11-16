@@ -1,14 +1,19 @@
 package top.lanscarlos.lycoris.module.command
 
+import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import taboolib.common.platform.command.*
+import taboolib.common.platform.function.adaptPlayer
+import taboolib.common.platform.function.info
 import taboolib.common.platform.function.warning
 import taboolib.expansion.createHelper
+import taboolib.expansion.setupDataContainer
+import taboolib.module.chat.TellrawJson
 import taboolib.module.kether.Kether
 import taboolib.platform.util.sendLang
 import top.lanscarlos.lycoris.Lycoris
-import top.lanscarlos.lycoris.module.config.TitleLoader
+import top.lanscarlos.lycoris.module.data.TitleData
 import top.lanscarlos.lycoris.module.ui.MenuShop
 import top.lanscarlos.lycoris.module.ui.Template
 
@@ -17,7 +22,33 @@ object CommandMain {
 
     @CommandBody
     val main = mainCommand {
-        execute<CommandSender> { _, _, _ ->
+        incorrectCommand { sender, context, index, state ->
+            when(index) {
+                1 -> {
+                    // lycoris error<<
+                    TellrawJson().sendTo(sender) {
+                        append("  ")
+                        append("§3Lycoris").hoverText("§7Lycoris is modern and advanced Minecraft menu-plugin")
+                    }
+                }
+
+                2 -> {
+                    // lycoris user player<<
+                    when(context.argument(-1).lowercase()) {
+                        "user" -> CommandUser.handleIncorrectCommand(sender, context, index, state)
+                    }
+                }
+            }
+
+
+
+
+            sender.sendMessage("context -1 ->" + context.argument(-1))
+            sender.sendMessage("index -> $index")
+            sender.sendMessage("state -> $state")
+        }
+        execute<CommandSender> { sender, _, _ ->
+            sender.sendMessage("帮助？")
             createHelper()
         }
     }
@@ -29,7 +60,7 @@ object CommandMain {
                 Lycoris.config.reload()
                 Lycoris.menuConfig.reload()
 
-                TitleLoader.loadTitles()
+                TitleData.loadTitles()
                 Template.loadTemplates()
                 MenuShop.loadMenu()
 
@@ -51,6 +82,16 @@ object CommandMain {
     val test = subCommand {
         execute<Player> { sender, _, _ ->
             MenuShop.openMenu(sender)
+        }
+    }
+
+    @CommandBody(permission = "aiurtitle.command.user", permissionDefault = PermissionDefault.OP, optional = true)
+    val data = subCommand {
+        execute<CommandSender> { sender, _, _ ->
+            Bukkit.getOfflinePlayers().forEach {
+                info("检测 - data - ${it.name}")
+                adaptPlayer(it).setupDataContainer()
+            }
         }
     }
 

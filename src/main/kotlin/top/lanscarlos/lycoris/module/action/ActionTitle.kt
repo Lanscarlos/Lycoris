@@ -5,6 +5,7 @@ import taboolib.library.kether.ArgTypes
 import taboolib.library.kether.ParsedAction
 import taboolib.module.kether.*
 import top.lanscarlos.lycoris.api.LycorisAPI
+import top.lanscarlos.lycoris.module.data.getUser
 import java.util.concurrent.CompletableFuture
 
 class ActionTitle {
@@ -12,7 +13,7 @@ class ActionTitle {
     class ActionUserTitleSet(val id: ParsedAction<*>): ScriptAction<Void>() {
         override fun run(frame: ScriptFrame): CompletableFuture<Void> {
             return frame.newFrame(id).run<String>().thenAccept {
-                LycorisAPI.setTitlePlayerUse(frame.getPlayer(), it)
+                frame.getPlayer().getUser().setUse(it)
             }
         }
     }

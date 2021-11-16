@@ -20,11 +20,11 @@ abstract class Database {
 
     abstract fun updatePlayerTitlePiece(player: OfflinePlayer, amount: Int = 0)
 
-    abstract fun getPlayerTitleList(player: OfflinePlayer) : MutableList<String>
+    abstract fun getPlayerRepository(player: OfflinePlayer): Map<String, Long>
 
-    abstract fun updatePlayerTitleList(player: OfflinePlayer, list: List<String>)
+    abstract fun updatePlayerRepository(player: OfflinePlayer, repository: Map<String, Long>)
 
-    abstract  fun insertPlayerData(player: OfflinePlayer, use: String, list: List<String>)
+    abstract  fun insertPlayerData(player: OfflinePlayer, use: String, repository: Map<String, Long>)
 
     companion object {
         val instance : Database by lazy {
@@ -41,7 +41,7 @@ abstract class Database {
         @SubscribeEvent
         fun onPlayerJoin(e: PlayerJoinEvent) {
             if (!instance.getUniqueIdList().contains(e.player.uniqueId.toString())) {
-                instance.insertPlayerData(e.player, "default", listOf())
+                instance.insertPlayerData(e.player, "default", mapOf())
             }
         }
     }

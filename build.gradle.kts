@@ -14,6 +14,7 @@ taboolib {
     install("module-lang")
     install("module-kether")
     install("expansion-command-helper")
+    install("expansion-player-database")
     install("platform-bukkit")
 	
 	description {

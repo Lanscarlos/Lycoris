@@ -57,3 +57,14 @@ template-setting:
     properties:
       button-repository: 'Use Now'
       button-shop: 'Acquire Now'
+
+# 调度器设置
+scheduler-setting:
+
+  # 多少 Tick 执行一次
+  # 默认 1200, 即一分钟执行一次
+  period: 1200
+
+  # 服务器启动完毕后延迟多少秒后开始执行
+  # 默认 200, 即延迟10秒
+  delay: 200

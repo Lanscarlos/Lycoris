@@ -23,15 +23,15 @@ class DataBaseUnknown : Database() {
         TODO("Not yet implemented")
     }
 
-    override fun getPlayerTitleList(player: OfflinePlayer): MutableList<String> {
+    override fun getPlayerRepository(player: OfflinePlayer): Map<String, Long> {
         TODO("Not yet implemented")
     }
 
-    override fun updatePlayerTitleList(player: OfflinePlayer, list: List<String>) {
+    override fun updatePlayerRepository(player: OfflinePlayer, repository: Map<String, Long>) {
         TODO("Not yet implemented")
     }
 
-    override fun insertPlayerData(player: OfflinePlayer, use: String, list: List<String>) {
+    override fun insertPlayerData(player: OfflinePlayer, use: String, repository: Map<String, Long>) {
         TODO("Not yet implemented")
     }
 }
