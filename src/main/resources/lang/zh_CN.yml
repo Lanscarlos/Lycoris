@@ -1,63 +1,63 @@
-Plugin-Reload-Loaded: '&8[&3Aiur&bTitle&8] &a良好 &8| &7已成功加载配置文件！'
-Plugin-Reload-Failed: '&8[&3Aiur&bTitle&8] &c错误 &8| &7配置文件加载失败！'
+Plugin-Reload-Loaded: '&8[&3Lycoris&8] &a良好 &8| &7已成功加载配置文件！'
+Plugin-Reload-Failed: '&8[&3Lycoris&8] &c错误 &8| &7配置文件加载失败！'
 
-Error-Unknown-Player: '&8[&3Aiur&bTitle&8] &c错误 &8| &7玩家 &b{0} &7不存在！'
-Error-Unknown-Title: '&8[&3Aiur&bTitle&8] &c错误 &8| &7称号 &b{0} &7不存在！'
-Error-Illegal-Number: '&8[&3Aiur&bTitle&8] &c错误 &8| &7输入的值 &b{0} &7非数字！'
+Error-Unknown-Player: '&8[&3Lycoris&8] &c错误 &8| &7玩家 &b{0} &7不存在！'
+Error-Unknown-Title: '&8[&3Lycoris&8] &c错误 &8| &7称号 &b{0} &7不存在！'
+Error-Illegal-Number: '&8[&3Lycoris&8] &c错误 &8| &7输入的值 &b{0} &7非数字！'
 
 Command-User-Help:
-  - '&8[&3Aiur&bTitle&8] &7指令帮助'
-  - '&f&l>> &b/at user <玩家ID> title'
-  - '&f&l>> &b/at user <玩家ID> piece'
+  - '&8[&3Lycoris&8] &7指令帮助'
+  - '&f&l>> &b/ly user <玩家ID> title'
+  - '&f&l>> &b/ly user <玩家ID> piece'
 
 
 
 # User-Title 相关指令
 
 Command-User-Title-Help:
-  - '&8[&3Aiur&bTitle&8] &7指令帮助'
-  - '&f&l>> &b/at user <玩家ID> title clear'
-  - '&f&l>> &b/at user <玩家ID> title give'
-  - '&f&l>> &b/at user <玩家ID> title set'
-  - '&f&l>> &b/at user <玩家ID> title remove'
+  - '&8[&3Lycoris&8] &7指令帮助'
+  - '&f&l>> &b/ly user <玩家ID> title clear'
+  - '&f&l>> &b/ly user <玩家ID> title give'
+  - '&f&l>> &b/ly user <玩家ID> title set'
+  - '&f&l>> &b/ly user <玩家ID> title remove'
 
-Command-User-Title-Clear-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> title give <称号ID>'
-Command-User-Title-Clear-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功为玩家 {0} 恢复为默认称号'
+Command-User-Title-Clear-Help: '&8[&3Lycoris&8] &7/ly user <玩家ID> title give <称号ID>'
+Command-User-Title-Clear-Success: '&8[&3Lycoris&8] &a良好 &8| &7成功为玩家 {0} 恢复为默认称号'
 
-Command-User-Title-Add-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> title give <称号ID>'
-Command-User-Title-Add-Cannot-Give-Default: '&8[&3Aiur&bTitle&8] &c错误 &8| &7不能给予默认称号！'
-Command-User-Title-Add-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功给予玩家 {0} 称号 {1}'
+Command-User-Title-Add-Help: '&8[&3Lycoris&8] &7/ly user <玩家ID> title give <称号ID>'
+Command-User-Title-Add-Cannot-Give-Default: '&8[&3Lycoris&8] &c错误 &8| &7不能给予默认称号！'
+Command-User-Title-Add-Success: '&8[&3Lycoris&8] &a良好 &8| &7成功给予玩家 {0} 称号 {1}'
 
-Command-User-Title-Set-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> title remove <称号ID>'
-Command-User-Title-Set-Not-Owned: '&8[&3Aiur&bTitle&8] &a良好 &8| &7玩家 {0} 未拥有称号 {1}'
-Command-User-Title-Set-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功设置玩家 {0} 称号为 {1}'
+Command-User-Title-Set-Help: '&8[&3Lycoris&8] &7/ly user <玩家ID> title remove <称号ID>'
+Command-User-Title-Set-Not-Owned: '&8[&3Lycoris&8] &a良好 &8| &7玩家 {0} 未拥有称号 {1}'
+Command-User-Title-Set-Success: '&8[&3Lycoris&8] &a良好 &8| &7成功设置玩家 {0} 称号为 {1}'
 
-Command-User-Title-Remove-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> title set <称号ID>'
-Command-User-Title-Remove-Cannot-Remove-Default: '&8[&3Aiur&bTitle&8] &c错误 &8| &7不能移除默认称号！'
-Command-User-Title-Remove-Not-Owned: '&8[&3Aiur&bTitle&8] &a良好 &8| &7玩家 {0} 未拥有称号 {1}'
-Command-User-Title-Remove-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功移除玩家 {0} 称号 {1}'
+Command-User-Title-Remove-Help: '&8[&3Lycoris&8] &7/ly user <玩家ID> title set <称号ID>'
+Command-User-Title-Remove-Cannot-Remove-Default: '&8[&3Lycoris&8] &c错误 &8| &7不能移除默认称号！'
+Command-User-Title-Remove-Not-Owned: '&8[&3Lycoris&8] &a良好 &8| &7玩家 {0} 未拥有称号 {1}'
+Command-User-Title-Remove-Success: '&8[&3Lycoris&8] &a良好 &8| &7成功移除玩家 {0} 称号 {1}'
 
 
 
 # User-Piece 相关指令
 
 Command-User-Piece-Help:
-  - '&8[&3Aiur&bTitle&8] &7指令帮助'
-  - '&f&l>> &b/at user <玩家ID> piece give'
-  - '&f&l>> &b/at user <玩家ID> piece set'
-  - '&f&l>> &b/at user <玩家ID> piece remove'
+  - '&8[&3Lycoris&8] &7指令帮助'
+  - '&f&l>> &b/ly user <玩家ID> piece give'
+  - '&f&l>> &b/ly user <玩家ID> piece set'
+  - '&f&l>> &b/ly user <玩家ID> piece remove'
 
-Command-User-Piece-Error-Illegal-Number: '&8[&3Aiur&bTitle&8] &c错误 &8| &7输入的值 &b{0} &7非正整数！'
+Command-User-Piece-Error-Illegal-Number: '&8[&3Lycoris&8] &c错误 &8| &7输入的值 &b{0} &7非正整数！'
 
-Command-User-Piece-Give-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> piece give <数量>'
-Command-User-Piece-Give-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功给予玩家 {0} 称号碎片 {1} 个'
+Command-User-Piece-Give-Help: '&8[&3Lycoris&8] &7/ly user <玩家ID> piece give <数量>'
+Command-User-Piece-Give-Success: '&8[&3Lycoris&8] &a良好 &8| &7成功给予玩家 {0} 称号碎片 {1} 个'
 
-Command-User-Piece-Set-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> piece set <数量>'
-Command-User-Piece-Set-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功设置玩家 {0} 称号碎片 {1} 个'
+Command-User-Piece-Set-Help: '&8[&3Lycoris&8] &7/ly user <玩家ID> piece set <数量>'
+Command-User-Piece-Set-Success: '&8[&3Lycoris&8] &a良好 &8| &7成功设置玩家 {0} 称号碎片 {1} 个'
 
-Command-User-Piece-Take-Help: '&8[&3Aiur&bTitle&8] &7/at user <玩家ID> piece take <数量>'
-Command-User-Piece-Take-Success: '&8[&3Aiur&bTitle&8] &a良好 &8| &7成功扣除玩家 {0} 称号碎片 {1} 个'
+Command-User-Piece-Take-Help: '&8[&3Lycoris&8] &7/ly user <玩家ID> piece take <数量>'
+Command-User-Piece-Take-Success: '&8[&3Lycoris&8] &a良好 &8| &7成功扣除玩家 {0} 称号碎片 {1} 个'
 
 
 # Player
-User-Title-Not-Exist: '&8[&3Aiur&bTitle&8] &c错误 &8| &7检测到你正在使用的称号已失效！已为你更换为默认称号'
+User-Title-Not-Exist: '&8[&3Lycoris&8] &c错误 &8| &7检测到你正在使用的称号已失效！已为你更换为默认称号'

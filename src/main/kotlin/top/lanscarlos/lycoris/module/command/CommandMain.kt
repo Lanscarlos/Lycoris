@@ -17,7 +17,7 @@ import top.lanscarlos.lycoris.module.data.TitleData
 import top.lanscarlos.lycoris.module.ui.MenuShop
 import top.lanscarlos.lycoris.module.ui.Template
 
-@CommandHeader(name = "AiurTitle", aliases = ["atitle", "at"], permission = "aiurtitle.command", permissionDefault = PermissionDefault.TRUE, permissionMessage = "测试 permissionMessage 信息")
+@CommandHeader(name = "Lycoris", aliases = ["ly"], permission = "lycoris.command", permissionDefault = PermissionDefault.TRUE, permissionMessage = "测试 permissionMessage 信息")
 object CommandMain {
 
     @CommandBody
@@ -39,13 +39,6 @@ object CommandMain {
                     }
                 }
             }
-
-
-
-
-            sender.sendMessage("context -1 ->" + context.argument(-1))
-            sender.sendMessage("index -> $index")
-            sender.sendMessage("state -> $state")
         }
         execute<CommandSender> { sender, _, _ ->
             sender.sendMessage("帮助？")
@@ -53,7 +46,7 @@ object CommandMain {
         }
     }
 
-    @CommandBody(permission = "aiurtitle.command.reload", permissionDefault = PermissionDefault.OP)
+    @CommandBody(permission = "lycoris.command.reload", permissionDefault = PermissionDefault.OP)
     val reload = subCommand {
         execute<CommandSender> { sender, _, _ ->
             try {
@@ -66,20 +59,20 @@ object CommandMain {
         }
     }
 
-    @CommandBody(permission = "aiurtitle.command.item", permissionDefault = PermissionDefault.OP)
+    @CommandBody(permission = "lycoris.command.item", permissionDefault = PermissionDefault.OP)
     val title = CommandTitle
 
-    @CommandBody(permission = "aiurtitle.command.user", permissionDefault = PermissionDefault.OP, optional = true)
+    @CommandBody(permission = "lycoris.command.user", permissionDefault = PermissionDefault.OP, optional = true)
     val user = CommandUser.command
 
-    @CommandBody(permission = "aiurtitle.command.user", permissionDefault = PermissionDefault.OP, optional = true)
+    @CommandBody(permission = "lycoris.command.user", permissionDefault = PermissionDefault.OP, optional = true)
     val test = subCommand {
         execute<Player> { sender, _, _ ->
             MenuShop.openMenu(sender)
         }
     }
 
-    @CommandBody(permission = "aiurtitle.command.user", permissionDefault = PermissionDefault.OP, optional = true)
+    @CommandBody(permission = "lycoris.command.user", permissionDefault = PermissionDefault.OP, optional = true)
     val data = subCommand {
         execute<CommandSender> { sender, _, _ ->
             Bukkit.getOfflinePlayers().forEach {
@@ -89,7 +82,7 @@ object CommandMain {
         }
     }
 
-    @CommandBody(permission = "aiurtitle.command.user", permissionDefault = PermissionDefault.OP, optional = true)
+    @CommandBody(permission = "lycoris.command.user", permissionDefault = PermissionDefault.OP, optional = true)
     val debug = subCommand {
         execute<Player> { sender, _, _ ->
             Kether.scriptRegistry.registeredNamespace.forEach {
