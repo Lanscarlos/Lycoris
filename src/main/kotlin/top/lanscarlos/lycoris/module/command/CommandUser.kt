@@ -127,7 +127,7 @@ object CommandUser {
             val offline = Bukkit.getOfflinePlayers().first { it.name == name }
             val title = LycorisAPI.getTitle(argument)
             offline.getUser().setUse(title.getId())
-            sender.sendLang("Command-User-Title-Set-Success", name, argument)
+            sender.sendLang("Command-User-Title-Set-Success", name, title.getDisplay())
         }
     }
 
@@ -141,7 +141,7 @@ object CommandUser {
             val offline = Bukkit.getOfflinePlayers().first { it.name == name }
             val title = LycorisAPI.getTitle(argument)
             offline.getUser().removeTitle(title.getId())
-            sender.sendLang("Command-User-Title-Remove-Success", name, argument)
+            sender.sendLang("Command-User-Title-Remove-Success", name, title.getDisplay())
         }
     }
 

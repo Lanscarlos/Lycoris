@@ -111,7 +111,7 @@ class User(private val offline: OfflinePlayer) {
         if (!LycorisAPI.isTitle(id)) return // 非称号
 
         if (!repository.contains(id)) {
-            repository[id] = duration
+            repository[id] = duration + System.currentTimeMillis()
             Database.instance.updatePlayerRepository(offline, repository)
             return
         }
