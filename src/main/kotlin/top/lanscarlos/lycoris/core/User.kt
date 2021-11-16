@@ -132,6 +132,10 @@ class User(private val offline: OfflinePlayer) {
     fun removeTitle(id: String) {
         if (!repository.contains(id)) return
 
+        if (id == getUse()) {
+            setUse(LycorisAPI.getDefaultTitle().getId())
+        }
+
         repository.remove(id)
         Database.instance.updatePlayerRepository(offline, repository)
     }
