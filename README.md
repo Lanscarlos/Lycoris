@@ -26,3 +26,5 @@ gradlew.bat clean build
 
 ## <strong id="title">称号</strong>
 
+## <strong id="title">效果</strong>
+

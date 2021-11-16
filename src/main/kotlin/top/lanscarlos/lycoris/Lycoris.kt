@@ -41,9 +41,9 @@ object Lycoris : Plugin() {
 
     val plugin by lazy { BukkitPlugin.getInstance() }
 
-    override fun onLoad() {
-        Language.default = "zh_CN"
-    }
+//    override fun onLoad() {
+//        Language.default = "zh_CN"
+//    }
 
     override fun onEnable() {
 
@@ -90,7 +90,7 @@ object Lycoris : Plugin() {
         task = getScheduler()
     }
 
-    fun getScheduler(): PlatformExecutor.PlatformTask {
+    private fun getScheduler(): PlatformExecutor.PlatformTask {
         return submit(period = period, delay = delay) {
             info("调度器在工作...")
             UserData.updatePlayerTitle()

@@ -57,13 +57,7 @@ object CommandMain {
     val reload = subCommand {
         execute<CommandSender> { sender, _, _ ->
             try {
-                Lycoris.config.reload()
-                Lycoris.menuConfig.reload()
-
-                TitleData.loadTitles()
-                Template.loadTemplates()
-                MenuShop.loadMenu()
-
+                Lycoris.onReload()
                 sender.sendLang("Plugin-Reload-Loaded")
             } catch (e : Exception) {
                 warning(e.stackTrace)
