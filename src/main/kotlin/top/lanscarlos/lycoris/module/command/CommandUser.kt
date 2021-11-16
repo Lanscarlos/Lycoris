@@ -84,7 +84,7 @@ object CommandUser {
             Bukkit.getOfflinePlayers().firstOrNull { it.name == name }?.let { offline ->
                 // 显示所有非永久称号
                 val list = offline.getUser().getPermanentTitles()
-                LycorisAPI.getTitles().filter { it.key !in list }.map { it.key }
+                LycorisAPI.getTitles().filter { it.value.isAvailable() && it.key !in list }.map { it.key }
             }
         }
 
