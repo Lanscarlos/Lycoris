@@ -6,7 +6,7 @@ import top.lanscarlos.lycoris.api.LycorisAPI
 import top.lanscarlos.lycoris.module.data.getUser
 
 object HookPlaceHolderAPI : PlaceholderExpansion {
-    override val identifier = "aiurtitle"
+    override val identifier = "lycoris"
 
     override fun onPlaceholderRequest(player: Player, args: String): String {
         val params = args.split("_")

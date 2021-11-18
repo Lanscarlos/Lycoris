@@ -60,4 +60,4 @@ Command-User-Piece-Take-Success: '&8[&3Lycoris&8] &a良好 &8| &7成功扣除玩
 
 
 # Player
-User-Title-Not-Exist: '&8[&3Lycoris&8] &c错误 &8| &7检测到你正在使用的称号已失效！已为你更换为默认称号'
+User-Title-Expire: '&8[&3Lycoris&8] &c提示 &8| &7当前使用的称号 {0} &7已失效！已为你更换为默认称号'

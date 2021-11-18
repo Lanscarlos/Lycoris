@@ -27,38 +27,55 @@ object DatabaseYaml : Database() {
     }
 
     override fun getPlayerTitleUse(player: OfflinePlayer): String {
-        return data.getString("${player.uniqueId.toString()}.use")
+        return data.getString("${player.uniqueId}.use")
     }
 
     override fun updatePlayerTitleUse(player: OfflinePlayer, id: String) {
-        data.set("${player.uniqueId.toString()}.use", id)
+        data.set("${player.uniqueId}.use", id)
         saveData()
     }
 
     override fun getPlayerTitlePiece(player: OfflinePlayer): Int {
-        return data.getInt("${player.uniqueId.toString()}.piece")
+        return data.getInt("${player.uniqueId}.piece")
     }
 
     override fun updatePlayerTitlePiece(player: OfflinePlayer, amount: Int) {
-        data.set("${player.uniqueId.toString()}.piece", amount)
+        data.set("${player.uniqueId}.piece", amount)
         saveData()
     }
 
     override fun getPlayerRepository(player: OfflinePlayer): Map<String, Long> {
-        return data.getMap<String, Long>("${player.uniqueId.toString()}.repository")
+//        val repository = mutableMapOf<String, Long>()
+//        data.getConfigurationSection("${player.uniqueId}.repository").let { section ->
+//            section.getKeys(false).forEach {
+//                repository[it] = section.getLong(it, -1L)
+//            }
+//        }
+//        return repository
+        val map = data.getMap<String, Long>("${player.uniqueId}.repository")
+        return mutableMapOf<String, Long>().apply {
+            map.forEach { (k, v) ->
+                if (v < 0) {
+                    put(k, -1L)
+                }else {
+                    put(k, v)
+                }
+            }
+        }
     }
 
     override fun updatePlayerRepository(player: OfflinePlayer, repository: Map<String, Long>) {
         info("正在保存仓库...")
-        data.set("${player.uniqueId.toString()}.repository", repository)
+        data.set("${player.uniqueId}.repository", repository)
         saveData()
     }
 
 
     override fun insertPlayerData(player: OfflinePlayer, use: String, repository: Map<String, Long>) {
-        data.set("${player.uniqueId.toString()}.use", use)
-        data.set("${player.uniqueId.toString()}.piece", 0)
-        data.set("${player.uniqueId.toString()}.repository", repository)
+        data.set("${player.uniqueId}.name", player.name)
+        data.set("${player.uniqueId}.use", use)
+        data.set("${player.uniqueId}.piece", 0)
+        data.set("${player.uniqueId}.repository", repository)
         saveData()
     }
 

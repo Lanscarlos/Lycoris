@@ -4,18 +4,14 @@ import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import taboolib.common.platform.command.*
-import taboolib.common.platform.function.adaptPlayer
-import taboolib.common.platform.function.info
 import taboolib.common.platform.function.warning
 import taboolib.expansion.createHelper
-import taboolib.expansion.setupDataContainer
 import taboolib.module.chat.TellrawJson
 import taboolib.module.kether.Kether
 import taboolib.platform.util.sendLang
 import top.lanscarlos.lycoris.Lycoris
-import top.lanscarlos.lycoris.module.data.TitleData
+import top.lanscarlos.lycoris.module.ui.MenuRepository
 import top.lanscarlos.lycoris.module.ui.MenuShop
-import top.lanscarlos.lycoris.module.ui.Template
 
 @CommandHeader(name = "Lycoris", aliases = ["ly"], permission = "lycoris.command", permissionDefault = PermissionDefault.TRUE, permissionMessage = "测试 permissionMessage 信息")
 object CommandMain {
@@ -59,26 +55,23 @@ object CommandMain {
         }
     }
 
-    @CommandBody(permission = "lycoris.command.item", permissionDefault = PermissionDefault.OP)
+    @CommandBody(permission = "lycoris.command.title", permissionDefault = PermissionDefault.OP)
     val title = CommandTitle
 
     @CommandBody(permission = "lycoris.command.user", permissionDefault = PermissionDefault.OP, optional = true)
     val user = CommandUser.command
 
-    @CommandBody(permission = "lycoris.command.user", permissionDefault = PermissionDefault.OP, optional = true)
-    val test = subCommand {
+    @CommandBody(permission = "lycoris.command.shop", permissionDefault = PermissionDefault.OP)
+    val shop = subCommand {
         execute<Player> { sender, _, _ ->
             MenuShop.openMenu(sender)
         }
     }
 
-    @CommandBody(permission = "lycoris.command.user", permissionDefault = PermissionDefault.OP, optional = true)
-    val data = subCommand {
-        execute<CommandSender> { sender, _, _ ->
-            Bukkit.getOfflinePlayers().forEach {
-                info("检测 - data - ${it.name}")
-                adaptPlayer(it).setupDataContainer()
-            }
+    @CommandBody(permission = "lycoris.command.repository", permissionDefault = PermissionDefault.OP)
+    val repository = subCommand {
+        execute<Player> { sender, _, _ ->
+            MenuRepository.openMenu(sender)
         }
     }
 

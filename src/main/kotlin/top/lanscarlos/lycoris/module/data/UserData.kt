@@ -2,7 +2,6 @@ package top.lanscarlos.lycoris.module.data
 
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
-import taboolib.platform.util.sendLang
 import top.lanscarlos.lycoris.api.LycorisAPI
 import top.lanscarlos.lycoris.core.User
 import top.lanscarlos.lycoris.module.database.Database
@@ -16,8 +15,12 @@ object UserData {
 
 
     fun init() {
+        val offlines = Database.instance.getUniqueIdList()
         Bukkit.getOfflinePlayers().forEach {
-            users[it] = getUser(it)
+            if (it.uniqueId.toString() !in offlines) {
+                Database.instance.insertPlayerData(it, LycorisAPI.getDefaultTitle().getId(), mapOf())
+            }
+            users[it] = User(it)
         }
     }
 
@@ -26,7 +29,6 @@ object UserData {
      * */
     fun getUser(player: OfflinePlayer): User {
         return users[player] ?: let {
-            Database.instance.insertPlayerData(player, LycorisAPI.getDefaultTitle().getId(), mapOf())
             val user = User(player)
             users[player] = user
             user

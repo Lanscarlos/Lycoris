@@ -34,9 +34,11 @@ title-setting:
     # 显示称号
     display: '&7平民'
     description:
-      - '我是简介'
+      - '默认称号'
     icon:
-      template: 'default'
+      template:
+        shop: 'example-shop'
+        repository: 'example-repository'
 
 template-setting:
 
@@ -44,19 +46,102 @@ template-setting:
   # 使用一下的模板，默认id为 default
   default:
     display:
-      mat: 'Name_Tag'
-      name: '${display-title}'
+      mat: '{{mat}}'
+      name: '{{display-title}}'
       lore:
-        - '&f&l>>&a&l Description'
-        - ' &c&lo &7{{description}}'
+        - '&f&l>>&a&l 简介'
+        - ' &c&l◆ &7{{description}} '
         - ''
-        - '{{button}}'
-      shiny: 'false'
+        - '&f&l>>&b&l 效果'
+        - ' &c&l◆ &7{{buff}} '
+        - ''
     script:
-      button: 'if check $menu-type is *shop then $button-repository else $button-shop'
+      buff: 'if empty &buff then *空 else &buff'
+      acquire: 'if empty &acquire then *无法获取 else &acquire'
     properties:
-      button-repository: 'Use Now'
-      button-shop: 'Acquire Now'
+      mat: 'Name_Tag'
+
+  buff-display:
+    format: '{{type}} {{level}}'
+    level:
+      '1': 'I'
+      '2': 'II'
+      '3': 'III'
+      '4': 'IV'
+      '5': 'V'
+      '6': 'VI'
+      '7': 'VII'
+      '8': 'VIII'
+      '9': 'IX'
+      '10': 'X'
+    type:
+      SPEED: '速度'
+      SLOW: '缓慢'
+      FAST_DIGGING: '快速挖掘'
+      SLOW_DIGGING: '缓慢挖掘'
+      INCREASE_DAMAGE: '力量'
+      HEAL: '瞬间治疗'
+      HARM: '瞬间伤害'
+      JUMP: '跳跃提升'
+      CONFUSION: '反胃'
+      REGENERATION: '生命恢复'
+      DAMAGE_RESISTANCE: '抗性提升'
+      FIRE_RESISTANCE: '抗火'
+      WATER_BREATHING: '水下呼吸'
+      INVISIBILITY: '隐身'
+      BLINDNESS: '失明'
+      NIGHT_VISION: '夜视'
+      HUNGER: '饥饿'
+      WEAKNESS: '虚弱'
+      POISON: '中毒'
+      WITHER: '凋灵'
+      HEALTH_BOOST: '生命提升'
+      ABSORPTION: '伤害吸收'
+      SATURATION: '饱和'
+      GLOWING: '发光'
+      LEVITATION: '漂浮'
+      LUCK: '幸运'
+      UNLUCK: '霉运'
+      SLOW_FALLING: '缓降'
+      CONDUIT_POWER: '潮涌能量'
+      DOLPHINS_GRACE: '海豚的恩惠'
+      BAD_OMEN: '不祥征兆'
+      HERO_OF_THE_VILLAGE: '村庄英雄'
+
+  duration-undefined-display: '永久'
+  deadline-undefined-display: '永久'
+
+# 控制称号获取流程
+# 修改以下内容前请确保您掌握了 Kether 语法
+# 详情见 https://kether.tabooproject.org/
+acquire-setting:
+  free:
+    condition: '*true'
+    display:
+      format: '&3免费'
+  impossible:
+    condition: '*false'
+    display:
+      format: '&3限时活动获取'
+  vault:
+    condition: 'check papi *"%vault_eco_balance%" >= &value'
+    action: |-
+      user add &id
+      command inline *"money take {{ player name }} {{ &value }}" as console
+      title color &display-title subtitle color *"&7&l赶紧去向你的小伙伴们炫耀一下吧！" by 5 40 5
+      tell color *"&8[&3Lycoris&8] &c&l获取成功！"
+      tell color *"&8[&3Lycoris&8] &7赶紧去向你的小伙伴们炫耀一下吧！"
+    deny: |-
+      title color *"&c&l获取失败！" subtitle color *"&7&l似乎还差...那么一点点！" by 5 40 5
+      tell color *"&8[&3Lycoris&8] &c&l获取失败！"
+      tell color *"&8[&3Lycoris&8] &7啊噢！ 你的金币似乎不够了呢！"
+    display:
+      format: '&3&l{{value}} &7金币'
+  point:
+    condition: 'check papi *"%playerpoints_point%" >= &value'
+    actions: 'command *"points take %player_name% &value" as console'
+    display:
+      format: '{{value}} &b点券'
 
 # 调度器设置
 scheduler-setting:

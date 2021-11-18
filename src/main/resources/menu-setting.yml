@@ -1,7 +1,6 @@
 
-
 menu-shop:
-  title: 'aa&3&l检测菜单'
+  title: '&3&l称号商城'
 
   layout:
     - '`previous-page`#######`next-page`'
@@ -15,14 +14,44 @@ menu-shop:
   close-sounds:
     - 'xxxx-1-1'
 
-  icons:
+  buttons:
+    previous-page:
+      display:
+        mat: 'Paper'
+        name: '&a上一页'
+      no-page:
+        display:
+          mat: 'Paper'
+          name: '&7上一页'
+
+    next-page:
+      display:
+        mat: 'Paper'
+        name: '&a下一页'
+      no-page:
+        display:
+          mat: 'Paper'
+          name: '&7下一页'
+
     '#':
       display:
         mat: 'LIGHT_BLUE_STAINED_GLASS_PANE'
-        name: 'abc'
-        lore:
-          - '你好'
-        shiny: true
+        name: '&r'
+
+menu-repository:
+  title: '&3&l称号仓库'
+
+  layout:
+    - '`previous-page`#######`next-page`'
+    - ' $$$$$$$'
+    - ' $$$$$$$'
+    - ' $$$$$$$'
+    - '`previous-page`#######`next-page`'
+
+  open-sounds:
+    - 'xxxx-1-1'
+  close-sounds:
+    - 'xxxx-1-1'
 
   buttons:
     previous-page:
@@ -34,7 +63,6 @@ menu-shop:
           mat: 'Paper'
           name: '&7上一页'
 
-
     next-page:
       display:
         mat: 'Paper'
@@ -43,3 +71,8 @@ menu-shop:
         display:
           mat: 'Paper'
           name: '&7下一页'
+
+    '#':
+      display:
+        mat: 'LIGHT_BLUE_STAINED_GLASS_PANE'
+        name: '&r'

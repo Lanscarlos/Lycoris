@@ -1,11 +1,9 @@
 package top.lanscarlos.lycoris.api
 
-import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import top.lanscarlos.lycoris.core.User
 import top.lanscarlos.lycoris.core.title.Title
 import top.lanscarlos.lycoris.module.data.TitleData
-import top.lanscarlos.lycoris.module.data.UserData
 import top.lanscarlos.lycoris.module.data.getUser
 
 object LycorisAPI {
@@ -16,7 +14,7 @@ object LycorisAPI {
 
     fun isAvailableTitle(id: String) : Boolean {
         if (!isTitle(id)) return false
-        return getTitle(id).isAvailable()
+        return getTitle(id).isActive()
     }
 
     fun getTitleIds() : List<String> {

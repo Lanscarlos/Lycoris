@@ -1,15 +1,81 @@
-example:
+example-shop:
   display:
-    mat: 'Name_Tag'
-    name: '${display-title}'
+    mat: '{{mat}}'
+    name: '{{display-title}}'
     lore:
-      - '&f&l>>&a&l Description'
-      - ' &c&lo &7{{description}}'
       - ''
-      - '{{button}}'
+      - '&f&l>>&a&l 简介'
+      - ' &c&l◆ &7{{description}} '
+      - ''
+      - '&f&l>>&b&l 效果'
+      - ' &c&l◆ &7{{buff}} '
+      # - ''
+      # - '&f&l>>&e&l 期限'
+      # - ' &c&l◆ &7{{duration}} '
+      - ''
+      - '&f&l>>&d&l 获取'
+      - ' &c&l◆ &7{{acquire}} '
+      - ''
+      - '&c&l>&6&l>&e&l>&a&l>&b&l>&f&l> {{button}} &f&l<&b&l<&a&l<&e&l<&6&l<&c&l<'
     shiny: 'false'
-    script:
-      button: 'if check $menu-type is *shop then $button-repository else $button-shop'
-    properties:
-      button-repository: 'Use Now'
-      button-shop: 'Acquire Now'
+  click-type:
+    - 'shift_left'
+    - 'shift_right'
+  script:
+    buff: 'if empty &buff then *无 else &buff'
+    acquire: 'if empty &acquire then *活动限定 else &acquire'
+    button: |-
+      if ly-title expired &id then
+        &button-expired
+      else if empty &acquire then
+        &button-unacquire
+      else if user permanent &id then
+        &button-owned
+      else if user active &id then
+        &button-renew
+      else
+        &button-acquire
+  properties:
+    mat: 'Name_Tag'
+    button-expired: '&8&l已绝版'
+    button-unacquire: '&e&l活动限定'
+    button-owned: '&7&l已拥有'
+    button-renew: '&3&l再次获取'
+    button-acquire: '&b&l立即获取'
+
+example-repository:
+  display:
+    mat: '{{mat}}'
+    name: '{{display-title}}'
+    lore:
+      - ''
+      - '&f&l>>&a&l 简介'
+      - ' &c&l◆ &7{{description}} '
+      - ''
+      - '&f&l>>&b&l 效果'
+      - ' &c&l◆ &7{{buff}} '
+      - ''
+      - '&f&l>>&e&l 期限'
+      - ' &c&l◆ &7{{deadline}} '
+      - ''
+      - '&c&l>&6&l>&e&l>&a&l>&b&l>&f&l> {{button}} &f&l<&b&l<&a&l<&e&l<&6&l<&c&l<'
+  script:
+    buff: 'if empty &buff then *无 else &buff'
+    button: |-
+      if user expired &id then
+        &button-expired
+      else if check user use is &id then
+        &button-using
+      else
+        &button-use
+  actions:
+    all: |-
+      if check &id is *default then
+        title &display-title subtitle color *"&7&l偶尔低调一下也好~" by 5 40 5
+      else
+        title &display-title subtitle color *"&7&l赶紧去向你的小伙伴们炫耀一下吧" by 5 40 5
+  properties:
+    mat: 'Name_Tag'
+    button-expired: '&8&l已失效'
+    button-using: '&c&l正在使用'
+    button-use: '&d&l佩戴称号'

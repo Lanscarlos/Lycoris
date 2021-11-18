@@ -14,7 +14,7 @@ class ActionInventory {
     }
 
     companion object {
-        @KetherParser(["inv"], namespace = "aiurtitle", shared = true)
+        @KetherParser(["inv"], namespace = "lycoris", shared = true)
         fun parser() = scriptParser {
             when(it.expects("close")) {
                 "close" -> ActionInventoryClose()

@@ -5,7 +5,10 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 import taboolib.common.platform.function.adaptCommandSender
+import taboolib.common.platform.function.adaptPlayer
 import taboolib.common.util.VariableReader
 import taboolib.library.configuration.ConfigurationSection
 import taboolib.library.xseries.XMaterial
@@ -13,9 +16,12 @@ import taboolib.module.configuration.util.getStringColored
 import taboolib.module.configuration.util.getStringListColored
 import taboolib.module.kether.Kether
 import taboolib.module.kether.KetherShell
+import taboolib.module.ui.ClickEvent
 import taboolib.platform.util.buildItem
 import top.lanscarlos.lycoris.Lycoris
 import top.lanscarlos.lycoris.core.title.Title
+import top.lanscarlos.lycoris.module.data.getUser
+import java.text.SimpleDateFormat
 
 class Template(config: ConfigurationSection) {
 
@@ -28,7 +34,11 @@ class Template(config: ConfigurationSection) {
     private val flags: List<ItemFlag>
     private val shiny: String
 
+    private val clickType: List<String>
+
     private val scripts: Map<String, String>
+
+    private val actions: MutableMap<String, List<String>> = mutableMapOf()
 
     private val properties: Map<String, Any>
 
@@ -57,6 +67,20 @@ class Template(config: ConfigurationSection) {
             }
         } ?: mapOf()
 
+        clickType = config.getStringList("click-type").let {
+            if (it.contains("all")) listOf() else it
+        }
+
+        config.getConfigurationSection("actions")?.let { section ->
+            section.getKeys(false).forEach {
+                actions[it] = when {
+                    section.isString(it) -> listOf(section.getString(it))
+                    section.isList(it) -> section.getStringList(it)
+                    else -> listOf()
+                }
+            }
+        }
+
         properties = config.getConfigurationSection("properties")?.let { section ->
             mutableMapOf<String, Any>().apply {
                 section.getKeys(true).forEach {
@@ -76,11 +100,25 @@ class Template(config: ConfigurationSection) {
     fun buildIcon(sender: Player, player: OfflinePlayer, menuType: String, title: Title): ItemStack {
         val values = mutableMapOf<String, Any>().apply {
             putAll(title.getProperties())
+            if (menuType == "repository") {
+                val deadline = if (player.getUser().getDeadline(title.getId()) < 0) {
+                    Lycoris.config.getStringColored("template-setting.deadline-undefined-display") ?: "永久"
+                } else {
+                    if (title.getDeadline() < 0 || player.getUser().getDeadline(title.getId()) < title.getDeadline()) {
+                        SimpleDateFormat("yyyy-MM-dd HH:mm").format(player.getUser().getDeadline(title.getId()))
+                    }else {
+                        SimpleDateFormat("yyyy-MM-dd HH:mm").format(title.getDeadline())
+                    }
+                }
+                put("deadline", deadline)
+            }
             put("menu-type", menuType)
+            put("isAvailable", title.isActive())
             put("sender", sender)
             put("player", player)
         }
-        return buildItem(XMaterial.matchXMaterial(this.mat.replaceVariables(values).uppercase()).get()) {
+        val mat = XMaterial.matchXMaterial(this.mat.replaceVariables(values).uppercase())
+        return buildItem(if (mat.isPresent) XMaterial.NAME_TAG else mat.get()) {
             name = this@Template.name.replaceVariables(values)
             lore += this@Template.lore.replaceVariables(values)
             if (this@Template.shiny.replaceVariables(values).equals("true", true)) {
@@ -88,6 +126,25 @@ class Template(config: ConfigurationSection) {
             }
             flags += this@Template.flags
         }
+    }
+
+    fun onIconClicked(player: Player, event: ClickEvent, vararg values: Map<String, Any>): Boolean {
+        if (clickType.isNotEmpty() && event.clickEvent().click.name.lowercase() !in clickType) return true
+        var result = false
+        val actions = mutableListOf<String>()
+        actions.addAll(this.actions["all"] ?: listOf())
+        actions.addAll(this.actions[event.clickEvent().click.name.lowercase()] ?: listOf())
+        if (actions.isEmpty()) return result
+        KetherShell.eval(actions, sender = adaptPlayer(player), namespace = Kether.scriptRegistry.registeredNamespace.toList(), context = {
+            values.forEach {
+                it.forEach { (k, v) ->
+                    set(k, v)
+                }
+            }
+        }).thenApply {
+            result = it?.toString() == "true"
+        }
+        return result
     }
 
     /**
@@ -225,15 +282,63 @@ class Template(config: ConfigurationSection) {
 
         private val templates = mutableMapOf<String, Template>()
 
+        private lateinit var buffFormat: String
+
+        private lateinit var buffFormatVariables: Set<String>
+
+        private val buffLevel = mutableMapOf<Int, String>()
+        private val buffType = mutableMapOf<String, String>()
+
         fun loadTemplates() {
             defaultTemplate = Template(Lycoris.config.getConfigurationSection("template-setting.default"))
+
+            buffFormat = Lycoris.config.getStringColored("template-setting.buff-display.format") ?: "{{type}} Lv.{{level}} {{duration}}s"
+
+            buffFormatVariables = buffFormat.let {
+                mutableSetOf<String>().apply {
+                    VariableReader(it, '{', '}', 2).parts.forEach { part ->
+                        if (part.isVariable) add(part.text)
+                    }
+                }
+            }
+
+            buffType.clear()
+            PotionEffectType.values().forEach {
+                buffType[it.name] = Lycoris.config.getStringColored("template-setting.buff-display.type.${it.name}") ?: it.name
+            }
+
+            buffLevel.clear()
+            Lycoris.config.getConfigurationSection("template-setting.buff-display.level")?.let { section ->
+                section.getKeys(false).forEach {
+                    buffLevel[it.toInt()] = section.getStringColored(it) ?: it
+                }
+            }
+
+            templates.clear()
             Lycoris.templateConfig.getKeys(false).forEach {
-                templates[it] = Template(Lycoris.templateConfig.getConfigurationSection(it))
+                templates[it.lowercase()] = Template(Lycoris.templateConfig.getConfigurationSection(it))
             }
         }
 
         fun getTemplate(id: String): Template {
-            return templates[id] ?: defaultTemplate
+            return templates[id.lowercase()] ?: defaultTemplate
+        }
+
+        fun getDefaultTemplate(): Template {
+            return defaultTemplate
+        }
+
+        fun buildBuffDisplay(potion: PotionEffect): String {
+            var display = buffFormat
+            buffFormatVariables.forEach {
+                display = when(it) {
+                    "type" -> display.replace("{{$it}}", buffType[potion.type.name] ?: potion.type.name)
+                    "level", "amplifier" -> display.replace("{{$it}}", buffLevel[potion.amplifier + 1] ?: (potion.amplifier + 1).toString())
+//                    "duration", "time" -> display.replace("{{$it}}", String.format("%.1f", potion.duration/20.0))
+                    else -> display
+                }
+            }
+            return display
         }
 
     }

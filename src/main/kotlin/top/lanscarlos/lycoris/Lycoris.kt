@@ -1,19 +1,22 @@
 package top.lanscarlos.lycoris
 
 import org.bukkit.Bukkit
+import org.bukkit.potion.PotionEffectType
 import taboolib.common.platform.Plugin
-import taboolib.common.platform.function.getDataFolder
-import taboolib.common.platform.function.info
-import taboolib.common.platform.function.submit
+import taboolib.common.platform.function.*
 import taboolib.common.platform.service.PlatformExecutor
 import taboolib.common.util.sync
 import taboolib.expansion.setupPlayerDatabase
+import taboolib.library.configuration.YamlConfiguration
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.SecuredFile
+import taboolib.module.kether.KetherShell
 import taboolib.module.lang.Language
 import taboolib.platform.BukkitPlugin
+import top.lanscarlos.lycoris.core.Acquire
 import top.lanscarlos.lycoris.module.data.TitleData
 import top.lanscarlos.lycoris.module.data.UserData
+import top.lanscarlos.lycoris.module.ui.Menu
 import top.lanscarlos.lycoris.module.ui.MenuShop
 import top.lanscarlos.lycoris.module.ui.Template
 import java.io.File
@@ -41,29 +44,26 @@ object Lycoris : Plugin() {
 
     val plugin by lazy { BukkitPlugin.getInstance() }
 
-//    override fun onLoad() {
-//        Language.default = "zh_CN"
-//    }
-
     override fun onEnable() {
 
-        when(config.getString("").lowercase()) {
-            "mysql" -> {
-                info("正在启用MySQL数据库")
-                setupPlayerDatabase(config.getConfigurationSection("database.source.mysql"))
-            }
-            else -> {
-                info("正在启用SQLite数据库")
-                setupPlayerDatabase(File(getDataFolder(), "data.db"))
-            }
-        }
+//        when(config.getString("").lowercase()) {
+//            "mysql" -> {
+//                info("正在启用MySQL数据库")
+//                setupPlayerDatabase(config.getConfigurationSection("database.source.mysql"))
+//            }
+//            else -> {
+//                info("正在启用SQLite数据库")
+//                setupPlayerDatabase(File(getDataFolder(), "data.db"))
+//            }
+//        }
 
         period = config.getLong("scheduler-setting.period", period)
         delay = config.getLong("scheduler-setting.delay", delay)
 
-        TitleData.loadTitles()
+        Acquire.loadAcquires()
         Template.loadTemplates()
-        MenuShop.loadMenu()
+        TitleData.loadTitles()
+        Menu.init()
 
         UserData.init()
 
@@ -82,9 +82,10 @@ object Lycoris : Plugin() {
         period = config.getLong("scheduler-setting.period", period)
         delay = config.getLong("scheduler-setting.delay", delay)
 
-        TitleData.loadTitles()
+        Acquire.loadAcquires()
         Template.loadTemplates()
-        MenuShop.loadMenu()
+        TitleData.loadTitles()
+        Menu.init()
 
         task.cancel()
         task = getScheduler()

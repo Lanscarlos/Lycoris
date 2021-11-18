@@ -5,3 +5,17 @@ example-Title:
     - '我是简介'
   icon:
     templete: 'default'
+  acquire:
+    - type: vault
+      value: 100
+example-expired:
+  display: "&b已过期"
+  description:
+    - '你好啊'
+    - '我是简介'
+  icon:
+    templete: 'default'
+  deadline: '2021-2-16 15:15'
+  acquire:
+    - type: vault
+      value: 100

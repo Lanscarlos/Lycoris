@@ -1,6 +1,7 @@
 package top.lanscarlos.lycoris.module.action
 
 import org.bukkit.entity.Player
+import taboolib.common.platform.function.info
 import taboolib.library.kether.ArgTypes
 import taboolib.library.kether.ParsedAction
 import taboolib.module.kether.*
@@ -10,25 +11,44 @@ import java.util.concurrent.CompletableFuture
 
 class ActionTitle {
 
-    class ActionUserTitleSet(val id: ParsedAction<*>): ScriptAction<Void>() {
-        override fun run(frame: ScriptFrame): CompletableFuture<Void> {
-            return frame.newFrame(id).run<String>().thenAccept {
-                frame.getPlayer().getUser().setUse(it)
+    class ActionTitleActive(val id: ParsedAction<*>): ScriptAction<Boolean>() {
+        override fun run(frame: ScriptFrame): CompletableFuture<Boolean> {
+            return frame.newFrame(id).run<String>().thenApply {
+                if (!LycorisAPI.isTitle(it)) return@thenApply false
+                LycorisAPI.getTitle(it).isActive()
+            }
+        }
+    }
+
+    class ActionTitleExpired(val id: ParsedAction<*>): ScriptAction<Boolean>() {
+        override fun run(frame: ScriptFrame): CompletableFuture<Boolean> {
+            return frame.newFrame(id).run<String>().thenApply {
+                if (!LycorisAPI.isTitle(it)) return@thenApply false
+                LycorisAPI.getTitle(it).isExpired()
+            }
+        }
+    }
+
+    class ActionTitlePermanent(val id: ParsedAction<*>): ScriptAction<Boolean>() {
+        override fun run(frame: ScriptFrame): CompletableFuture<Boolean> {
+            return frame.newFrame(id).run<String>().thenApply {
+                if (!LycorisAPI.isTitle(it)) return@thenApply false
+                LycorisAPI.getTitle(it).isPermanent()
             }
         }
     }
 
     companion object {
-        @KetherParser(["aiurtitletuser", "atuser"], namespace = "aiurtitle", shared = true)
+        @KetherParser(["ly-title"], namespace = "lycoris", shared = true)
         fun parser() = scriptParser {
-            when(it.expects("add", "set", "remove")) {
-                "set" -> ActionUserTitleSet(it.next(ArgTypes.ACTION))
+            when(it.expects(
+                "active", "expired", "permanent"
+            )) {
+                "active" -> ActionTitleActive(it.next(ArgTypes.ACTION))
+                "expired" -> ActionTitleExpired(it.next(ArgTypes.ACTION))
+                "permanent" -> ActionTitlePermanent(it.next(ArgTypes.ACTION))
                 else -> error("out of case")
             }
-        }
-
-        fun ScriptFrame.getPlayer(): Player {
-            return script().sender?.castSafely<Player>() ?: error("No player selected.")
         }
     }
 
