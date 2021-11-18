@@ -12,7 +12,6 @@ object ListenerPlayerRespawn {
 
     @SubscribeEvent
     fun onPlayerRespawn(e : PlayerRespawnEvent) {
-        e.player.sendMessage("检测到你重生了")
         e.player.getUser().getTitle().getBuff().forEach {
             e.player.addPotionEffect(it)
         }
