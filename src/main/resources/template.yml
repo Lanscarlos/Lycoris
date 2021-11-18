@@ -18,6 +18,11 @@ example-shop:
       - ''
       - '&c&l>&6&l>&e&l>&a&l>&b&l>&f&l> {{button}} &f&l<&b&l<&a&l<&e&l<&6&l<&c&l<'
     shiny: 'false'
+
+  # 点击类型
+  # 用于防止玩家误触
+  # 点击类型为以下内容才会被插件执行
+  # 若不想启用该功能请自行注释掉
   click-type:
     - 'shift_left'
     - 'shift_right'

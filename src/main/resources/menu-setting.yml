@@ -3,17 +3,22 @@ menu-shop:
   title: '&3&l称号商城'
 
   layout:
-    - '`previous-page`#######`next-page`'
+    # 页面布局
+    # 使用 $ 符号定义称号的显示位置
+    - '#########'
     - ' $$$$$$$'
     - ' $$$$$$$'
     - ' $$$$$$$'
-    - '`previous-page`#######`next-page`'
+    - ' $$$$$$$'
+    - '`previous-page`###`Notice`###`next-page`'
 
+  # 该功能暂未得到支持
   open-sounds:
     - 'xxxx-1-1'
   close-sounds:
     - 'xxxx-1-1'
 
+  # 定义页面的按钮
   buttons:
     previous-page:
       display:
@@ -32,6 +37,26 @@ menu-shop:
         display:
           mat: 'Paper'
           name: '&7下一页'
+
+    Notice:
+      display:
+        mat: 'HEART_OF_THE_SEA'
+        name: '&e&l● &d&l温馨提示 &e&l●'
+        lore:
+          - ''
+          - '&f&l>>&a&l 说明'
+          - ' &c&l◆ &7为了防止玩家们错点 '
+          - ' &c&l◆ &7请您在获取心仪称号时 '
+          - ' &c&l◆ &7使用&3&lShift+点击&7相应称号 '
+          - ''
+          # - '&f&l>>&b&l 信息'
+          # - ' &c&l◆ &7称号碎片 %lycoris_piece%'
+          # - ''
+          # - '&f&l>>&e&l 操作'
+          # - ' &c&l◆ &3&l点击&7前往我的称号仓库'
+        # actions:
+        # - 'inv close'
+        # - 'command *"ly repository" as player'
 
     '#':
       display:
@@ -42,7 +67,7 @@ menu-repository:
   title: '&3&l称号仓库'
 
   layout:
-    - '`previous-page`#######`next-page`'
+    - '#########'
     - ' $$$$$$$'
     - ' $$$$$$$'
     - ' $$$$$$$'
@@ -71,6 +96,23 @@ menu-repository:
         display:
           mat: 'Paper'
           name: '&7下一页'
+
+    Notice:
+      display:
+        mat: 'HEART_OF_THE_SEA'
+        name: '&e&l● &d&l温馨提示 &e&l●'
+        lore:
+          - ''
+          - '&f&l>>&a&l 说明'
+          - ' &c&l◆ &7为了防止玩家们错点 '
+          - ' &c&l◆ &7请您在获取心仪称号时 '
+          - ' &c&l◆ &7使用&3&lShift+点击&7相应称号 '
+          - ''
+          - '&f&l>>&e&l 操作'
+          - ' &c&l◆ &3&l点击&7前往我的称号商城'
+      actions:
+        - 'inv close'
+        - 'command *"ly shop" as player'
 
     '#':
       display:

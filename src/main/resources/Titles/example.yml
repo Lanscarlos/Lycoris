@@ -1,21 +1,43 @@
 example-Title:
-  display: "&b小萌新~"
+  display: "&b小萌新"
   description:
-    - '你好啊'
-    - '我是简介'
-  icon:
-    templete: 'default'
+    - '小萌新专属称号'
+    - '不许欺负小萌新QAQ'
+
+  # 称号的获取途径
+  # 支持填写多种途径
+  # 途径配置详见 config.yml 内的 acquire-setting 条款
   acquire:
-    - type: vault
-      value: 100
+    - type: free
+
+
 example-expired:
-  display: "&b已过期"
+  display: "&b示例-已过期"
   description:
     - '你好啊'
     - '我是简介'
-  icon:
-    templete: 'default'
-  deadline: '2021-2-16 15:15'
+
+  # 全局截止时间
+  # 到期之后全服失效
+  deadline: '2021-11-16 15:30'
+
+# 示例 - 限时称号
+example-5m:
+  display: "&d&l梦想一心"
+  description:
+    - '暂无'
+
+  # 从获取称号的时刻算起
+  # 五分钟限时使用，超时会自动失效
+  duration: '1m'
+
+  # 药水效果定义
+  buff:
+    - type: speed
+      level: 1
+
+  # 获取途径定义
+  # 以下为 100 点券购买一次
   acquire:
-    - type: vault
+    - type: point
       value: 100

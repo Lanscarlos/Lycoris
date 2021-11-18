@@ -5,13 +5,15 @@
 database:
 
   # 数据存储方式
-  # YAML(默认), MySQL
+  # YAML(默认)
   storage: YAML
 
   # 数据源配置
   source:
 
     # MySQL相关设置
+    # MySQL暂无法被支持使用
+    # 请耐心等待最新版本
     mysql:
       host: localhost
       port: 3306
@@ -33,9 +35,12 @@ title-setting:
 
     # 显示称号
     display: '&7平民'
+
+    # 称号简介
     description:
       - '默认称号'
     icon:
+      # 定义模板, 以及在不同菜单中使用的模板
       template:
         shop: 'example-shop'
         repository: 'example-repository'
@@ -45,24 +50,55 @@ template-setting:
   # 当上述默认模板无法正常被加载时
   # 使用一下的模板，默认id为 default
   default:
+
+    # 显示样式，可用双括号 {{变量}} 来使用变量
+    # 可用变量
+    # {{display}} 称号内容, 不包括前后缀
+    # {{display-title}} 称号内容, 包括前后缀
+    # {{prefix}} 称号前缀
+    # {{suffix}} 称号后缀
+    # {{menu-type}} 菜单类型, 目前仅有 shop(商城) 、 repository(仓库)
+    # {{description}} 简介
+    # {{buff}} 药水效果
+    # {{duration}} 时限, 一段时间
+    # {{deadline}} 期限, 具体失效日期
+    # 此外还可以调用称号内定义的自定义变量
     display:
       mat: '{{mat}}'
       name: '{{display-title}}'
       lore:
+        - ''
         - '&f&l>>&a&l 简介'
         - ' &c&l◆ &7{{description}} '
         - ''
         - '&f&l>>&b&l 效果'
         - ' &c&l◆ &7{{buff}} '
         - ''
+        - '&f&l>>&e&l 期限'
+        - ' &c&l◆ &7{{deadline}} '
+        - ''
+        - '&c&l>&6&l>&e&l>&a&l>&b&l>&f&l> &7&l已拥有 &f&l<&b&l<&a&l<&e&l<&6&l<&c&l<'
+
+    # Kether 脚本语句
+    # 用于动态控制显示的内容
+    # 可用 & 符号来使用变量, 如 &id 为称号id变量
+    # 变量包含上述 display 所有变量
+    # 此外 也可以调用模板内的自定义变量
+    # 例如 &mat 调用下方定义的 mat 变量
     script:
-      buff: 'if empty &buff then *空 else &buff'
+      buff: 'if empty &buff then *无 else &buff'
       acquire: 'if empty &acquire then *无法获取 else &acquire'
+
+    # 自定义变量
+    # 支持 颜色代码、以及列表型变量
     properties:
       mat: 'Name_Tag'
 
   buff-display:
+    # 药水效果显示样式
     format: '{{type}} {{level}}'
+
+    # 对应级别显示样式
     level:
       '1': 'I'
       '2': 'II'
@@ -74,6 +110,8 @@ template-setting:
       '8': 'VIII'
       '9': 'IX'
       '10': 'X'
+
+    # 对应类型显示样式
     type:
       SPEED: '速度'
       SLOW: '缓慢'
@@ -108,21 +146,41 @@ template-setting:
       BAD_OMEN: '不祥征兆'
       HERO_OF_THE_VILLAGE: '村庄英雄'
 
+  # 称号时限未定义时显示样式
   duration-undefined-display: '永久'
+
+  # 称号期限未定义时显示样式
   deadline-undefined-display: '永久'
 
 # 控制称号获取流程
 # 修改以下内容前请确保您掌握了 Kether 语法
 # 详情见 https://kether.tabooproject.org/
 acquire-setting:
+
+  # 获取类型名
+  # 可自定义
   free:
+    # 判断条件, 使用 Kether 语句
+    # 需要返回 true 或 false
     condition: '*true'
+
+    # 条件通过时执行以下 Kether 语句
+    action: |-
+      user add &id
+      title color &display-title subtitle color *"&7&l赶紧去向你的小伙伴们炫耀一下吧！" by 5 40 5
+      tell color *"&8[&3Lycoris&8] &c&l获取成功！"
+      tell color *"&8[&3Lycoris&8] &7赶紧去向你的小伙伴们炫耀一下吧！"
+
+    # 主要用于模板展示
     display:
       format: '&3免费'
+
+
   impossible:
     condition: '*false'
     display:
       format: '&3限时活动获取'
+
   vault:
     condition: 'check papi *"%vault_eco_balance%" >= &value'
     action: |-
@@ -139,11 +197,22 @@ acquire-setting:
       format: '&3&l{{value}} &7金币'
   point:
     condition: 'check papi *"%playerpoints_point%" >= &value'
-    actions: 'command *"points take %player_name% &value" as console'
+    action: |-
+      user add &id
+      command inline *"points take {{ player name }} {{ &value }}" as console
+      title color &display-title subtitle color *"&7&l赶紧去向你的小伙伴们炫耀一下吧！" by 5 40 5
+      tell color *"&8[&3Lycoris&8] &c&l获取成功！"
+      tell color *"&8[&3Lycoris&8] &7赶紧去向你的小伙伴们炫耀一下吧！"
+    deny: |-
+      title color *"&c&l获取失败！" subtitle color *"&7&l似乎还差...那么一点点！" by 5 40 5
+      tell color *"&8[&3Lycoris&8] &c&l获取失败！"
+      tell color *"&8[&3Lycoris&8] &7啊噢！ 你的点券似乎不够了呢！"
     display:
-      format: '{{value}} &b点券'
+      format: '&3&l{{value}} &7点券'
 
 # 调度器设置
+# 主要用于检测玩家当前称号是否有效
+# 以及持续更新玩家的药水效果
 scheduler-setting:
 
   # 多少 Tick 执行一次
