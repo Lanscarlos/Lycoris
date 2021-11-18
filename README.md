@@ -6,7 +6,7 @@
 
 # <strong id="description">简介</strong>
 
-本插件是免费的，但我们不提供 jar 文件，你可以通过自行[构建](#build)来取得本插件
+本插件是免费的，你也可以通过自行[构建](#build)来取得本插件
 
 # <strong id="module">进度</strong>
 
