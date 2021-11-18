@@ -61,14 +61,14 @@ object CommandMain {
     @CommandBody(permission = "lycoris.command.user", permissionDefault = PermissionDefault.OP, optional = true)
     val user = CommandUser.command
 
-    @CommandBody(permission = "lycoris.command.shop", permissionDefault = PermissionDefault.OP)
+    @CommandBody(permission = "lycoris.command.shop", permissionDefault = PermissionDefault.TRUE)
     val shop = subCommand {
         execute<Player> { sender, _, _ ->
             MenuShop.openMenu(sender)
         }
     }
 
-    @CommandBody(permission = "lycoris.command.repository", permissionDefault = PermissionDefault.OP)
+    @CommandBody(permission = "lycoris.command.repository", permissionDefault = PermissionDefault.TRUE)
     val repository = subCommand {
         execute<Player> { sender, _, _ ->
             MenuRepository.openMenu(sender)

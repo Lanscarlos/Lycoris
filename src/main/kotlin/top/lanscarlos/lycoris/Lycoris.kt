@@ -93,7 +93,6 @@ object Lycoris : Plugin() {
 
     private fun getScheduler(): PlatformExecutor.PlatformTask {
         return submit(period = period, delay = delay) {
-            info("调度器在工作...")
             UserData.updatePlayerTitle()
             UserData.updatePlayerBuff()
         }
